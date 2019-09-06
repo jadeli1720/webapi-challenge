@@ -44,10 +44,6 @@ router.post('/', validatProject, (req, res) => {
         })
 });
 
-//Uses getProjectActions() from projectModel.js?
-router.post('/', (req, res) => {
-    
-});
 
 /************************* Delete **************************/
 

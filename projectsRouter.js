@@ -25,8 +25,16 @@ router.get('/:id', validateProjectId, (req, res) => {
 });
 
 //Uses getProjectActions() from projectModel.js?
-router.get('/:id/actions', (req, res) => {
+router.get('/:id/actions', validateProjectId, (req, res) => {
+    const { id } = req.params;
 
+    postMessage.getProjectActions(id)
+        .then(actions => {
+            res.status(200).json(actions)
+        })
+        .catch(() => {
+            res.status(500).json({ error: "The actions specified by that id could not be retrieved" })
+        })
 });
 
 
@@ -50,7 +58,7 @@ router.post('/', validatProject, (req, res) => {
 router.delete('/:id', validateProjectId, (req, res) => {
     const { id } = req.project;
     Project.remove(id)
-        .then(id =>{
+        .then(id => {
             res.status(200).json(id)
         })
         .catch(err => {
@@ -61,7 +69,7 @@ router.delete('/:id', validateProjectId, (req, res) => {
 
 /************************* Update **************************/
 
-router.put('/:id',validateProjectId, (req,res) => {
+router.put('/:id', validateProjectId, (req, res) => {
     const { id } = req.params;
     const { name, description } = req.body;
 
@@ -96,18 +104,20 @@ function validateProjectId(req, res, next) {
 };
 
 //validates projects  when one is being create
-function validatProject(req,res,next) {
+function validatProject(req, res, next) {
     const { name, description } = req.body;
 
-    if(!name || !description){
-        return res.status(400).json({errorMessage: "A name and a description is required"})
+    if (!name || !description) {
+        return res.status(400).json({ errorMessage: "A name and a description is required" })
     }
-    if (typeof name !== "string" || typeof description !== 'string'){
-        return res.status(400).json({errorMessage: "The name and description must be strings"})
+    if (typeof name !== "string" || typeof description !== 'string') {
+        return res.status(400).json({ errorMessage: "The name and description must be strings" })
     }
     req.body = { name, description };
     next()
 }
+
+
 
 
 module.exports = router;

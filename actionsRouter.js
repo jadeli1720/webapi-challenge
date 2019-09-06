@@ -37,7 +37,7 @@ router.use(express.json());
 
 // /************************* Update **************************/
 
-// router.update('/', (req,res) => {
+// router.put('/', (req,res) => {
 
 // });
 

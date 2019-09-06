@@ -24,7 +24,7 @@ router.get('/:id', validateProjectId, (req, res) => {
 
 });
 
-//do we need?
+//Uses getProjectActions() from projectModel.js?
 router.get('/:id/actions', (req, res) => {
 
 });
@@ -44,26 +44,43 @@ router.post('/', validatProject, (req, res) => {
         })
 });
 
+//Uses getProjectActions() from projectModel.js?
 router.post('/', (req, res) => {
-
+    
 });
 
 /************************* Delete **************************/
 
-router.delete('/', (req, res) => {
-
+router.delete('/:id', validateProjectId, (req, res) => {
+    const { id } = req.project;
+    Project.remove(id)
+        .then(id =>{
+            res.status(200).json(id)
+        })
+        .catch(err => {
+            res.status(500).json({ error: "The project with the specified could not be deleted" })
+        });
 });
 
 
 /************************* Update **************************/
 
-// router.update('/', (req,res) => {
+router.put('/:id',validateProjectId, (req,res) => {
+    const { id } = req.params;
+    const { name, description } = req.body;
 
-// });
+    Project.update(id, { name, description })
+        .then(project => {
+            res.status(200).json(project)
+        })
+        .catch(err => {
+            res.status(500).json({ error: "The project information could not be modified." })
+        })
+});
 
 //custom middleware
 
-//validates user id on all endpoints using id parameters
+//validatesproject id on all endpoints using id parameters
 function validateProjectId(req, res, next) {
     const { id } = req.params
     Project.get(id)
@@ -82,6 +99,7 @@ function validateProjectId(req, res, next) {
 
 };
 
+//validates projects  when one is being create
 function validatProject(req,res,next) {
     const { name, description } = req.body;
 

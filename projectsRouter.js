@@ -117,6 +117,19 @@ function validatProject(req, res, next) {
     next()
 }
 
+function validatActionId(req, res, next) {
+    const { name, description } = req.body;
+
+    if (!name || !description) {
+        return res.status(400).json({ errorMessage: "A name and a description is required" })
+    }
+    if (typeof name !== "string" || typeof description !== 'string') {
+        return res.status(400).json({ errorMessage: "The name and description must be strings" })
+    }
+    req.body = { name, description };
+    next()
+}
+
 
 
 

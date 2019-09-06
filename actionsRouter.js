@@ -26,7 +26,7 @@ router.get('/:id', validateActionId, (req, res) => {
 
 /************************* POST **************************/
 
-router.post('/:id', validateAction, (req, res) => {
+router.post('/', validateAction, (req, res) => {
     const action = req.body;
 
     Action.insert(action)
@@ -34,7 +34,7 @@ router.post('/:id', validateAction, (req, res) => {
             res.status(201).json(action)
         })
         .catch(err => {
-            res.status(500).json({ error: "There was an error while saving the project to the database" })
+            res.status(404).json({ error: "The project with that id cannot be found" })
         })
 });
 
@@ -90,8 +90,7 @@ function validateActionId(req, res, next) {
 
 
 function validateAction(req, res, next) {
-    const { id:project_id } = req.params;
-    const { description, notes } = req.body;
+    const { description, notes, project_id } = req.body;
 
     if (!req.body) {
         return res.status(400).json({ error: "Action is missing a description and notes." })

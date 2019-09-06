@@ -18,11 +18,14 @@ router.get('/', (req, res) => {
         })
 });
 
-router.get('/', (req,res) => {
+//This grabbed the project of specified id and all of it's actions/
+router.get('/:id', validateUserId, (req,res) => {
+    res.status(200).json(req.project)
 
 });
 
-router.get('/', (req,res) => {
+//do we need?
+router.get('/:id/actions', (req,res) => {
 
 });
 
@@ -49,6 +52,27 @@ router.delete('/', (req,res) => {
 // router.update('/', (req,res) => {
 
 // });
+
+//custom middleware
+
+//validates user id on all endpoints using id parameters
+function validateUserId(req, res, next) {
+    const { id } = req.params
+    Project.get(id)
+        .then(project => {
+            console.log(project)
+            if (project) {
+                req.project = project;
+                next();
+            } else {
+                res.status(400).json({ message: "invalid project id" })
+            }
+        })
+        .catch(() => {
+            res.status(500).json({ errorMessage: "Could not validate project with the specified id" })
+        })
+
+};
 
 
 module.exports = router;

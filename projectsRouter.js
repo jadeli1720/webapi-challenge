@@ -10,8 +10,8 @@ router.use(express.json());
 
 router.get('/', (req, res) => {
     Project.get()
-        .then(user => {
-            res.status(200).json(user)
+        .then(project => {
+            res.status(200).json(project)
         })
         .catch(() => {
             res.status(500).json({ error: "The project information could not be retrieved" })
@@ -80,7 +80,7 @@ router.put('/:id',validateProjectId, (req,res) => {
 
 //custom middleware
 
-//validatesproject id on all endpoints using id parameters
+//validates project id on all endpoints using id parameters
 function validateProjectId(req, res, next) {
     const { id } = req.params
     Project.get(id)

@@ -26,13 +26,24 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+    1. It sits up top of the raw http module provided by node.
+    2. Adds extra functionality: Routing, middleware.....
+
 - [ ] Describe Middleware?
+
+    Functions that get the request and responses and perform operations upon them.
 
 - [ ] Describe a Resource?
 
+    The things/items the application care about and want to manage (i.e.:Users, products, clients....)
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+    The API can return a response message/http response to let the client know if the request was successful
+
 - [ ] How can we partition our application into sub-applications?
+
+    We can use routes to partition our application into sub-applications
 
 ## Project Setup
 
@@ -74,7 +85,7 @@ The `projectModel.js` helper includes an extra method called `getProjectActions(
 Design and build the necessary endpoints to:
 
 - [ ] Perform CRUD operations on _projects_ and _actions_. When adding an action, make sure the `project_id` provided belongs to an existing `project`. If you try to add an action with an `id` of 3 and there is no project with that `id` the database will return an error.
-- [ ] Retrieve the list of actions for a project.
+- [x] Retrieve the list of actions for a project.
 
 ### Database Schemas
 

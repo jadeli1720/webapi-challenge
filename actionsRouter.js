@@ -88,7 +88,7 @@ function validateActionId(req, res, next) {
 
 };
 
-//not quite working with edge case
+
 function validateAction(req, res, next) {
     const { id:project_id } = req.params;
     const { description, notes } = req.body;
@@ -96,9 +96,9 @@ function validateAction(req, res, next) {
     if (!req.body) {
         return res.status(400).json({ error: "Action is missing a description and notes." })
     }
-    // if (typeof project_id !== Number) {
-    //     return res.status(404).json({ error: "Action is missing a project_id" })
-    // }
+    if ( !project_id ) {
+        return res.status(404).json({ error: "Action is missing a project_id" })
+    }
 
     req.body = { project_id, description, notes };
     next();

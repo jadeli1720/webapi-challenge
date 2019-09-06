@@ -24,7 +24,7 @@ router.get('/:id', validateProjectId, (req, res) => {
 
 });
 
-//Uses getProjectActions() from projectModel.js?
+
 router.get('/:id/actions', validateProjectId, (req, res) => {
     const { id } = req.params;
 
